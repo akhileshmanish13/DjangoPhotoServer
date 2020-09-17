@@ -1,0 +1,22 @@
+Setting up django .venv
+
+Setting up venv:
+
+Run this so the venv in the same folder as the code
+export PIPENV_VENV_IN_PROJECT="enabled"
+
+From <https://stackoverflow.com/questions/52540121/make-pipenv-create-the-virtualenv-in-the-same-folder> 
+
+
+$ python3 -m pip install pipenv
+$ python3 -m pipenv shell
+$ pipenv install django
+
+From <https://hackersandslackers.com/getting-started-django/> 
+
+Then can run:
+ 
+ % python -m django --version
+ % django-admin startproject PhotoServer
+ % cd PhotoServer
+ % python manage.py runserver
