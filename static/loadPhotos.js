@@ -54,3 +54,18 @@ var waitForLoadMs = 2000;
 var photoRefreshRate = 5000; 
 
 loadImageIntoFrame();
+
+function openFullscreen(){
+
+    var elem = document.getElementById("photoframe_container"); 
+
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+      }    
+}

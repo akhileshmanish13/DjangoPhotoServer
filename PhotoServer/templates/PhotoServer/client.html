@@ -6,18 +6,22 @@
 
   <title>😌</title>
   <meta name="description" content="Local photo server 📸">
-  <link rel="stylesheet" href="static/clientStyling.css?v=1.0">
-
+  <link rel="stylesheet" href="static/clientStyling.css?v=2.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 
 <body>
-
-  <div id='photoFrame1' class="photoFrame" style="background-image: url('./newPic');">
-
+  <div id="photoframe_container" class="photoFrame">
+    <div id='photoFrame1' class="photoFrame" style="background-image: url('./newPic');">
+    </div>
+    
+    <div id='photoFrame2' class="photoFrame" style="background-image: url('./newPic');">
+    </div>
   </div>
-  <div id='photoFrame2' class="photoFrame" style="background-image: url('./newPic');">
 
-  </div>
+  <!-- <button class="fullscreen" onclick="openFullscreen();">Fullscreen ➡️🖥</button> -->
+
+
 
   <script src="static/loadPhotos.js"></script>
 

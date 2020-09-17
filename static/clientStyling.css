@@ -20,7 +20,7 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   
-  transition: all 2.5s;
+  transition: all 2s;
 
   opacity: 1;
 }
@@ -34,4 +34,12 @@ photoFrame1{
 
 .hiddenPhotoFrame{
   opacity: 0;
+}
+
+
+.fullscreen{
+  z-index: 30;
+  position: absolute;
+  top:20px;
+  left:20px
 }
