@@ -50,7 +50,7 @@ function loadImageIntoFrame(){
 var currentPhotoFrame = 2;
 
 
-var waitForLoadMs = 2000;
+var waitForLoadMs = 3500;
 var photoRefreshRate = 5000; 
 
 loadImageIntoFrame();
