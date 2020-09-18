@@ -22,7 +22,7 @@ def get_unsplash_image():
 
 
 def getPicture(request):
-    # return local_picture_loader.getLocalPicture()
+    return local_picture_loader.getLocalPicture()
 
     try:
         return local_picture_loader.getLocalPicture()
