@@ -1,11 +1,12 @@
 import os
-import os
-import sys
 import random
 import pathlib
 import glob
 
 from django.http import HttpResponse
+
+from dotenv import load_dotenv
+load_dotenv()
 
 def httpResponsePicturFromLocalUrl(file_url):
     with open(file_url, "rb") as f:
@@ -45,13 +46,7 @@ def get_random_files_recurse_slow(extensions, folder_url=os.getcwd()):
 
     return chosen_image
 
-
-# Error if it traverses into a directory with no pictures...
-# Then it throws an error.
-def get_random_files_recurse_quick(extensions, folder_url=os.getcwd()):
-    
-    # Check if any of the file extensions in this folder?
-    # or if there are directories. 
+def check_path_exists(folder_url):
     if(not os.path.exists(folder_url)):
         error_message = "Sorry, path not found:" + folder_url
         print(error_message)
@@ -61,6 +56,15 @@ def get_random_files_recurse_quick(extensions, folder_url=os.getcwd()):
         error_message = "Sorry, path empty:" + folder_url
         print(error_message)
         raise NameError(error_message);
+
+# Error if it traverses into a directory with no pictures...
+# Then it throws an error.
+def get_random_files_recurse_quick(extensions, folder_url=os.getcwd()):
+    
+    # Check if any of the file extensions in this folder?
+    # or if there are directories. 
+    check_path_exists(folder_url);
+
 
     # Can't use this as sub-directories might have files.
     # if(not glob.glob('*.jpeg') ): #Need to extend for all extensions
@@ -88,7 +92,10 @@ def get_random_files_recurse_quick(extensions, folder_url=os.getcwd()):
         return get_random_files_recurse_quick(extensions, folder_url)
 
 
-def get_random_files_recurse(extensions, folder_url=os.getcwd()):
+def get_random_files_recurse(extensions, folder_url):
+    check_path_exists(folder_url)
+    print('trying', folder_url)
+
     max_attempts = 10
     for attempt_number in range(max_attempts):
         try:
@@ -113,15 +120,15 @@ def getRandomLocalPictureURL():
     extensions = [".jpeg", ".jpg", ".png"];
     extensions = extensions + list(map(lambda s: s.upper(), extensions))
 
-    # Try external HDD
-    root_url = "/Volumes/4TB WD Passport/Photos Library.photoslibrary/originals/"
+    # Try first photo root directory
     try:
+        root_url = os.environ.get('photo_root')
         image_url = get_random_files_recurse(extensions, root_url)
         # print("image_url", image_url)
     
     # Try fallbacklocation
     except NameError:
-        root_url = "/Users/tawfiq/Pictures/"
+        root_url = os.environ.get('photo_fallback_directory')
         # print("new root_url", root_url)
         image_url = get_random_files_recurse(extensions, root_url)
     
