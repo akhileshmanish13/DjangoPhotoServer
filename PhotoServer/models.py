@@ -1,5 +1,6 @@
 from django.db import models
-from datetime import datetime
+# from datetime import datetime
+from django.utils import timezone
 
 class CachedPhoto(models.Model):
     cached_image = models.BinaryField(blank=True, null=True)
@@ -7,7 +8,5 @@ class CachedPhoto(models.Model):
 
     #Default values
     number_of_times_read = models.IntegerField(default=0)
-    date_added = models.DateTimeField(default=datetime.now)
+    date_added = models.DateTimeField(default=timezone.now)
     
-    # Set when you want to delete
-    to_delete = models.BooleanField(default=False)

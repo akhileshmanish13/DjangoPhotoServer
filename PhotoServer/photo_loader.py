@@ -21,7 +21,7 @@ def get_unsplash_image():
 
 def getLocalPicture():
     try:
-        return local_cache.getNewValue();
+        return local_cache.getNewPicture();
         
     except Exception as e:
         print("=-=-=-=-=-=-=-=-=-=-=- CACHE LOOKUP FAILED =-=-=-=-=-=-=-=-=-=-=-")

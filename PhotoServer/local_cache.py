@@ -1,36 +1,24 @@
 from . import local_picture_loader
 from .models import CachedPhoto
+import os
 
 cache_size =  20
-minimum_cache_size = cache_size/2
-
-# minimum_cache_size = 5
-# minimum_cache_size = min(cache_size/2, minimum_cache_size)
 
 def cacheNeedsUpdate():
     # Select count() from DB where number_of_times_read = 0
-    fresh_photos = CachedPhoto.objects.all().filter(number_of_times_read=0)
+    fresh_photo_count = CachedPhoto.objects.all().filter(number_of_times_read=0).count()
     
-    fresh_photo_count = len(fresh_photos)
-    if (fresh_photo_count <= minimum_cache_size):
-        print(f"cacheNeedsUpdate: fresh-photos={fresh_photo_count} minimum_cache_size={minimum_cache_size} cache_size={cache_size}", )
+    cache_refresh_size = cache_size /2 #if cache_size is small then 5 will mean it always resets.
+    if (fresh_photo_count <= cache_refresh_size):
+        print(f"cacheNeedsUpdate: fresh-photos={fresh_photo_count} cache_size={cache_size}", )
         return True
     
     return False;
 
 
 def delete_old_values():
-    photos_to_delete = CachedPhoto.objects.all().filter(to_delete=True)
-    photos_to_delete_count = len(photos_to_delete);
-    print(f"{photos_to_delete_count} photos to delete.")
-    photos_to_delete.delete()
-
-
-def mark_read_pictures_for_deletion():
-    photos_to_mark_for_deletion = CachedPhoto.objects.all().filter(number_of_times_read__gte=1)
-    print(f"{len(photos_to_mark_for_deletion)} photos marked for deletion.")
-    photos_to_mark_for_deletion.update(to_delete=True)
-
+    CachedPhoto.objects.all().filter(number_of_times_read__gte=1).delete();
+    
 
 def add_new_pictures_to_cache(number_to_add):
     new_cache_objects = []
@@ -47,13 +35,9 @@ def add_new_pictures_to_cache(number_to_add):
     return True
 
 
-
-
 def updateCache():
-    delete_old_values()
-    mark_read_pictures_for_deletion()
     add_new_pictures_to_cache(cache_size)
-
+    delete_old_values()
     
 
 # https://django-background-tasks.readthedocs.io/en/latest/
@@ -61,35 +45,55 @@ def updateCache():
 def updateIfNeeded():
     if(cacheNeedsUpdate()):
         updateCache()
-    else:
-        print("Cache doesn't need update")
+
+def urlExists(file_url):
+    if(not os.path.exists(file_url)):
+        error_message = "Sorry, path not found:" + file_url
+        print(error_message)
+        return False
+    return True
 
 
-def getNewValue():
+def getNewCacheValue():
+    updateIfNeeded()
+    
+
+    #Should put ones that aren't marked for deletion first (but if they're all marked for delete it still returns something).
+    cache_val = CachedPhoto.objects.order_by('number_of_times_read', 'date_added')[0]
+    # print("---------   Cache Object   ------------")
+    # print(cache_val.cached_image)
+    # print(cache_val.cache_file_url)
+    # print(cache_val.number_of_times_read)
+    # print(cache_val.date_added)
+    
+    return cache_val
+    
+    
+    
+def getNewPicture():
     updateIfNeeded()
     
     # toDelete asc -- ideally ones that are fresh.
     # number_of_times_read
     # date_added asc
+    file_url = False
 
-    #Should put ones that aren't marked for deletion first (but if they're all marked for delete it still returns something).
-    cache_val = CachedPhoto.objects.order_by('to_delete','number_of_times_read', 'date_added')[0]
-    print("---------   Cache Object   ------------")
-    print(cache_val.cached_image)
-    print(cache_val.cache_file_url)
-    print(cache_val.number_of_times_read)
-    print(cache_val.date_added)
-    print(cache_val.to_delete)
-    
-    
-    response = local_picture_loader.httpResponsePicturFromLocalUrl(cache_val.cache_file_url)
-    
+    while(not file_url):
+        cache_val = getNewCacheValue();
+
+        if(cache_val and cache_val.cache_file_url and urlExists(cache_val.cache_file_url)):
+            file_url = cache_val.cache_file_url; #and ends the while loop
+        else:
+            print(f"File URL not found {cache_val.cache_file_url}, deleting record.")
+            cache_val.delete()
+
+
+    print(f"Responding with: {file_url}")
     cache_val.number_of_times_read +=1
     cache_val.save()
 
+    response = local_picture_loader.httpResponsePicturFromLocalUrl(file_url)    
     return response
-    
-    
 
 
 def bypassCacheAndGetLocalPicture():

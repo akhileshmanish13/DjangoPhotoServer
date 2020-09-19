@@ -78,7 +78,7 @@ def get_random_files_recurse_quick(extensions, folder_url=os.getcwd()):
         return get_random_files_recurse_quick(extensions, new_url)
 
     file_extension = pathlib.Path(new_url).suffix
-    print('file_extension', file_extension)
+    # print('file_extension', file_extension)
 
     # Error if it traverses into a directory with no pictures...
     # Will just keep hitting the else statement. 
