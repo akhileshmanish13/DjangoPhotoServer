@@ -1,11 +1,30 @@
-Setting up django .venv
+## Running it once it is setup
+-------------------------------
+pipenv shell python manage.py runserver 0.0.0.0:8000
 
-Setting up venv:
+## Setting up pipenv
+---------------------
+$ python3 -m pip install pipenv
+$ python3 -m pipenv shell
+$ pipenv install django
+
+
+## Running migrations for the DB:
+---------------------------------
+% python manage.py makemigrations PhotoServer
+% python manage.py showmigrations
+% python manage.py migrate
+
+
+
+
+## Initally setting up django .venv:
+-------------------------------------
 
 Run this so the venv in the same folder as the code
-export PIPENV_VENV_IN_PROJECT="enabled"
+$ export PIPENV_VENV_IN_PROJECT="enabled"
 
-From <https://stackoverflow.com/questions/52540121/make-pipenv-create-the-virtualenv-in-the-same-folder> 
+<https://stackoverflow.com/questions/52540121/make-pipenv-create-the-virtualenv-in-the-same-folder> 
 
 
 $ python3 -m pip install pipenv
