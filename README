@@ -9,12 +9,6 @@ $ python3 -m pipenv shell
 $ pipenv install django
 
 
-## Running migrations for the DB:
----------------------------------
-% python manage.py makemigrations PhotoServer
-% python manage.py showmigrations
-% python manage.py migrate
-
 
 
 
@@ -39,3 +33,12 @@ Then can run:
  % django-admin startproject PhotoServer
  % cd PhotoServer
  % python manage.py runserver
+
+Will also need to run migrations:
+
+## Running migrations for the DB:
+---------------------------------
+% python manage.py makemigrations PhotoServer
+% python manage.py showmigrations
+% python manage.py migrate
+
