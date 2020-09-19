@@ -55,3 +55,11 @@ Will also need to run migrations:
 
 For background-taks info see:
 https://django-background-tasks.readthedocs.io/en/latest/
+
+
+## Helpful SQL 
+---------------------------------
+sqlite3 db.sqlite3 'select priority,run_at,repeat,repeat_until,queue,attempts,failed_at,locked_at from background_task;'
+
+sqlite3 db.sqlite3 'select id,number_of_times_read,date_added from PhotoServer_cachedphoto;'
+sqlite3 db.sqlite3 'select * from PhotoServer_cachedphoto;'
