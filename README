@@ -2,8 +2,17 @@
 -------------------------------
 pipenv shell python manage.py runserver 0.0.0.0:8000
 
+
 ## Setting up pipenv
 ---------------------
+$ python3 -m pipenv install --python 3.7;
+$ python3 -m pipenv shell;
+% pipenv install; 
+% python manage.py runserver
+
+
+or 
+
 $ python3 -m pip install pipenv
 $ python3 -m pipenv shell
 $ pipenv install django
