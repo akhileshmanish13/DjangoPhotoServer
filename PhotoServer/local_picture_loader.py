@@ -107,23 +107,29 @@ def get_random_files_recurse(extensions, folder_url=os.getcwd()):
 
 
 
-def getLocalPicture():
+
+def getRandomLocalPictureURL():
     random.seed();
     extensions = [".jpeg", ".jpg", ".png"];
     extensions = extensions + list(map(lambda s: s.upper(), extensions))
 
-    print("extensions", extensions)
-
-    root_url = "/Volumes/4TB WD Passport/Photos Library.photoslibrary/originals_/"
+    # Try external HDD
+    root_url = "/Volumes/4TB WD Passport/Photos Library.photoslibrary/originals/"
     try:
         image_url = get_random_files_recurse(extensions, root_url)
-        print("image_url", image_url)
-
+        # print("image_url", image_url)
+    
+    # Try fallbacklocation
     except NameError:
-        root_url = "/Users/tawfiq/Pictures/Empty Folder/"
-        print("new root_url", root_url)
+        root_url = "/Users/tawfiq/Pictures/"
+        # print("new root_url", root_url)
         image_url = get_random_files_recurse(extensions, root_url)
     
-    print("\nFile found:", image_url)
-    print("\n")
+
+    print("Local picture loader found:", image_url, "\n")
+    return image_url
+
+
+def getRandomLocalPicture():
+    image_url = getRandomLocalPictureURL();
     return httpResponsePicturFromLocalUrl(image_url)

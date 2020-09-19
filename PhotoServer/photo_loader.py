@@ -1,4 +1,4 @@
-from . import local_picture_loader
+from . import local_picture_loader, local_cache
 
 from django.http import HttpResponse, HttpResponseNotFound, StreamingHttpResponse, JsonResponse
 
@@ -19,13 +19,22 @@ def get_unsplash_image():
     r = requests.get(unsplash_url, allow_redirects=True)
     return HttpResponse(r, content_type="image/jpeg")
 
+def getLocalPicture():
+    try:
+        return local_cache.getNewValue();
+        
+    except Exception as e:
+        print("=-=-=-=-=-=-=-=-=-=-=- CACHE LOOKUP FAILED =-=-=-=-=-=-=-=-=-=-=-")
+        print(str(e))
+        return local_cache.bypassCacheAndGetLocalPicture();
+
 
 
 def getPicture(request):
-    return local_picture_loader.getLocalPicture()
-
+    # return getLocalPicture()
+    
     try:
-        return local_picture_loader.getLocalPicture()
+        return getLocalPicture()
     except:
         print("Failed to getLocalPicture")
 
