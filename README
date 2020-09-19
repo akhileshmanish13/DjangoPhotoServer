@@ -5,7 +5,9 @@ pipenv shell python manage.py runserver 0.0.0.0:8000
 
 ## Setting up pipenv
 ---------------------
-$ python3 -m pipenv install --python 3.7;
+$ export PIPENV_VENV_IN_PROJECT="enabled"
+
+$ python3 -m pipenv install --python 3.7; #If you need to install python3.7
 $ python3 -m pipenv shell;
 % pipenv install; 
 % python manage.py runserver
