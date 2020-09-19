@@ -103,9 +103,8 @@ def get_random_files_recurse(extensions, folder_url):
             if(image_url):
                 return image_url
         except NameError as e:
-            if(str(e)[0:22] == "Sorry, path not found:"):
-                raise e #If the path isn't found, just quit.
-
+            # if(str(e)[0:22] == "Sorry, path not found:"):
+            #     raise e #If the path isn't found, just quit.
             pass #try again
     
     error_message = f"No image found after {max_attempts} attempts in: {folder_url}"

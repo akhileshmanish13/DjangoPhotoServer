@@ -26,6 +26,7 @@ def getLocalPicture():
     except Exception as e:
         print("=-=-=-=-=-=-=-=-=-=-=- CACHE LOOKUP FAILED =-=-=-=-=-=-=-=-=-=-=-")
         print(str(e))
+        # raise e
         return local_cache.bypassCacheAndGetLocalPicture();
 
 
