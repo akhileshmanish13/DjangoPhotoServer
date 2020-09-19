@@ -1,7 +1,9 @@
 ## Running it once it is setup
 -------------------------------
 pipenv shell python manage.py runserver 0.0.0.0:8000
-python manage.py process_tasks
+pipenv shell python manage.py process_tasks
+
+pipenv run ./start.sh
 
 ## Setting up pipenv
 ---------------------
@@ -63,3 +65,5 @@ sqlite3 db.sqlite3 'select priority,run_at,repeat,repeat_until,queue,attempts,fa
 
 sqlite3 db.sqlite3 'select id,number_of_times_read,date_added from PhotoServer_cachedphoto;'
 sqlite3 db.sqlite3 'select * from PhotoServer_cachedphoto;'
+
+delete from PhotoServer_cachedphoto where 1;
