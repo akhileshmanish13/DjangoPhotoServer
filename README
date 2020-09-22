@@ -26,6 +26,22 @@ or
 Oneline: 
 $ export PIPENV_VENV_IN_PROJECT="enabled"; python3 -m pip install pipenv; python3 -m pipenv install --python 3.7;python3 -m pipenv shell; pipenv install; python manage.py runserver
 
+
+## Initial setup
+----------------
+Run db migrations
+
+% python manage.py makemigrations PhotoServer
+% python manage.py showmigrations
+% python manage.py migrate
+
+And copy the env file. (adjust contentsas needed)
+
+$ cp .env_example .env
+
+* * * 
+
+
 ## Initally setting up django .venv:
 -------------------------------------
 
@@ -68,3 +84,16 @@ sqlite3 db.sqlite3 'select id,number_of_times_read,date_added from PhotoServer_c
 sqlite3 db.sqlite3 'select * from PhotoServer_cachedphoto;'
 
 delete from PhotoServer_cachedphoto where 1;
+
+
+## Raspberry PI
+----------------
+
+To acess the hard-drive it sometimes requires that you be logged in as root otherwise you will get permission errors while the server is running.
+
+Most of the pictures are accessible by root though so you can log into the pi and run:
+- sudo su root
+
+From there just start the server and it should run fine without permission errors. Hacky workaround found here: https://askubuntu.com/a/489761
+
+
