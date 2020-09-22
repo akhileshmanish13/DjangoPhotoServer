@@ -3,15 +3,15 @@ from . import local_picture_loader, local_cache
 from django.http import HttpResponse, HttpResponseNotFound, StreamingHttpResponse, JsonResponse
 
 
-from PIL import Image
 import requests
 
 
 def empty_dummy_image():
-    red = Image.new('RGB', (1, 1), (255,0,0))
-    response = HttpResponse(content_type="image/jpeg")
-    red.save(response, "JPEG")
-    return response
+    return HttpResponse(status=204) #204 = No Content
+    # red = Image.new('RGB', (1, 1), (255,0,0))
+    # response = HttpResponse(content_type="image/jpeg")
+    # red.save(response, "JPEG")
+    # return response
 
 
 def get_unsplash_image():
