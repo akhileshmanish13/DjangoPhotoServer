@@ -1,4 +1,5 @@
 from . import local_picture_loader
+from . import local_cache_file_handler
 from .models import CachedPhoto
 import os
 from background_task import background
@@ -29,21 +30,31 @@ def cacheNeedsUpdate():
 
 
 def delete_old_values():
-    CachedPhoto.objects.all().filter(number_of_times_read__gte=1).delete();
+    photos_to_delete = CachedPhoto.objects.all().filter(number_of_times_read__gte=1)
+
+    for cached_photo in photos_to_delete:
+        local_cache_file_handler.deleteImageIfInLocalDirectory(cached_photo.cache_file_url)
     
+    photos_to_delete.delete();
+    
+@background()
+def save_image_url_to_cache(image_url):
+    new_local_image_url = local_cache_file_handler.copyImageToLocalDirectory(image_url)
+    if(new_local_image_url):
+        CachedPhoto.objects.create(cache_file_url=new_local_image_url) 
+    print(f"Saved {image_url} to cache as {new_local_image_url}.");
+
+
 
 def add_new_pictures_to_cache(number_to_add):
-    new_cache_objects = []
+
     for i in range(number_to_add):
-        image_url = local_picture_loader.getRandomLocalPictureURL();
-        print(image_url)
+        original_image_url = local_picture_loader.getRandomLocalPictureURL();
+        print(original_image_url)
+        save_image_url_to_cache(original_image_url)
 
-        new_image = CachedPhoto(cache_file_url=image_url)
-        new_image.save() # This way if it fails on another attempt, some of the images still save
-        # new_cache_objects.append(new_image)
-
-    # CachedPhoto.objects.bulk_create(new_cache_objects)
-    print('finished adding new pictures to cache')
+    # CachedPhoto.objects.bulk_create(new_cache_objects) #Don't use bulk insert in case something fails above.
+    print('finished finding new pictures to cache')
 
 @background()
 def updateCache():

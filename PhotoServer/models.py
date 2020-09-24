@@ -3,7 +3,6 @@ from django.db import models
 from django.utils import timezone
 
 class CachedPhoto(models.Model):
-    cached_image = models.BinaryField(blank=True, null=True)
     cache_file_url = models.CharField(max_length=500, null=True)
 
     #Default values

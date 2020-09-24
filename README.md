@@ -11,7 +11,7 @@ pipenv shell python manage.py process_tasks
 ---------------------
 $ export PIPENV_VENV_IN_PROJECT="enabled"
 
-$ python3 -m pipenv install --python 3.7; #If you need to install python3.7
+$ python3 -m pipenv install --python 3.8; #If you need to install python3.8
 $ python3 -m pipenv shell;
 % pipenv install; 
 % python manage.py runserver
@@ -26,7 +26,9 @@ $ pipenv install django
 or  
 
 Oneline: 
-$ export PIPENV_VENV_IN_PROJECT="enabled"; python3 -m pip install pipenv; python3 -m pipenv install --python 3.7;python3 -m pipenv shell; pipenv install; python manage.py runserver
+$ export PIPENV_VENV_IN_PROJECT="enabled"; python3 -m pip install pipenv; python3 -m pipenv install --python 3.8;python3 -m pipenv shell; pipenv install; python manage.py runserver
+
+$ export PIPENV_VENV_IN_PROJECT="enabled"; python3 -m pip install pipenv; python3 -m pipenv shell; pipenv install; python manage.py runserver
 
 
 ## Initial setup
