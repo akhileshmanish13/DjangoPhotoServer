@@ -1,9 +1,11 @@
 ## Running it once it is setup
 -------------------------------
+pipenv run ./start.sh
+
+Which runs:
 pipenv shell python manage.py runserver 0.0.0.0:8000
 pipenv shell python manage.py process_tasks
 
-pipenv run ./start.sh
 
 ## Setting up pipenv
 ---------------------
