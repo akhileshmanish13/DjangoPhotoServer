@@ -14,6 +14,15 @@ def get_local_photo_directory_and_check_it_exists():
 
     return local_directory
 
+def get_local_photo_cache_url_for(image_url):
+    local_directory = get_local_photo_directory_and_check_it_exists();
+
+    if(local_directory and image_url):
+        new_file = os.path.basename(image_url)
+        new_file = os.path.join(local_directory, new_file)
+        return new_file
+    
+    
 
 def copyImageToLocalDirectory(image_url):
     if(not os.path.isfile(image_url)):

@@ -38,10 +38,20 @@ def delete_old_values():
     photos_to_delete.delete();
     
 @background()
-def save_image_url_to_cache(image_url):
+def save_image_url_to_cache_if_unique(image_url):
+
+    assumed_new_url = local_cache_file_handler.get_local_photo_cache_url_for(image_url)
+
+    #Check if it already exists and abort.
+    if( CachedPhoto.objects.all().filter(cache_file_url=assumed_new_url).exists() ):
+        print(f'Already cached {image_url} at {assumed_new_url}.')
+        return;
+
+    # Doesn't exist so copy it and save.
     new_local_image_url = local_cache_file_handler.copyImageToLocalDirectory(image_url)
     if(new_local_image_url):
         CachedPhoto.objects.create(cache_file_url=new_local_image_url) 
+    # Even if it 
     print(f"Saved {image_url} to cache as {new_local_image_url}.");
 
 
@@ -50,8 +60,8 @@ def add_new_pictures_to_cache(number_to_add):
 
     for i in range(number_to_add):
         original_image_url = local_picture_loader.getRandomLocalPictureURL();
-        print(original_image_url)
-        save_image_url_to_cache(original_image_url)
+
+        save_image_url_to_cache_if_unique(original_image_url)
 
     # CachedPhoto.objects.bulk_create(new_cache_objects) #Don't use bulk insert in case something fails above.
     print('finished finding new pictures to cache')
