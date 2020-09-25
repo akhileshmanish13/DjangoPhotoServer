@@ -100,4 +100,5 @@ Most of the pictures are accessible by root though so you can log into the pi an
 
 From there just start the server and it should run fine without permission errors. Hacky workaround found here: https://askubuntu.com/a/489761
 
-
+To get it to just boot on launch, can setup /etc/rc.local
+Follow the instructions in `sample_rc.local` in this repo.
