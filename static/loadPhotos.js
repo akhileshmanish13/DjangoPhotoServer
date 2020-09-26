@@ -39,8 +39,9 @@ function loadImageIntoFrame(){
 
         hideForegroundPhotoFrame();
         currentPhotoFrame = backgroundPhotoFrame();
-
-        loadImageIntoFrame(); // Call self again!
+        
+        // Foreground takes about 2.5s to hide, so need to reload AFTER that.
+        setTimeout(loadImageIntoFrame, 2500);
     }, waitForLoadMs);
 
     refreshCount+=1;

@@ -14,7 +14,7 @@ body{
   position: absolute;
   top:0;
 
-  transition: all 2.5s;
+  transition: all 2s;
 
   opacity: 1;
 
@@ -34,7 +34,7 @@ body{
     object-fit: contain;
 }
 
-photoFrame1{
+#photoFrame1{
   z-index: 10;
 }
 #photoFrame2{
