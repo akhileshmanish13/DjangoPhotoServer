@@ -19,10 +19,18 @@ body{
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  
+
   transition: all 2.5s;
 
   opacity: 1;
+}
+
+.photo{
+    opacity: 1;
+    transition: all 2s;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 photoFrame1{
