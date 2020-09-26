@@ -51,7 +51,7 @@ function loadImageIntoFrame(){
 }
 
 
-var currentPhotoFrame = 1;
+var currentPhotoFrame = 2;
 var refreshCount = 0;  //reload the page after this many files so that the browser can cleanup  memory.
 
 var waitForLoadMs = 10  *1000;
