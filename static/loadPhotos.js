@@ -8,7 +8,7 @@ function updateBackgroundPhotoFrame(frameNumber){
 
 function hideForegroundPhotoFrame(){
     
-    var imageFrame = document.getElementById("photoFrame2");
+    var imageFrame = document.getElementById("photoFrameForeground");
 
     className = "hiddenPhotoFrame"
     if(imageFrame.classList.contains(className)){
