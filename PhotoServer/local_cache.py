@@ -20,12 +20,12 @@ def cacheNeedsUpdate():
     fresh_photo_count = CachedPhoto.objects.all().filter(number_of_times_read=0).count()
 
     cache_refresh_size = cache_size /2 #if cache_size is small then 5 will mean it always resets.
-    print(f"cacheNeedsUpdate?: fresh-photos={fresh_photo_count} cache_size={cache_size} cache_refresh_size={cache_refresh_size}")
+    print(f"Does cacheNeedsUpdate?: fresh-photos={fresh_photo_count} cache_size={cache_size} cache_refresh_size={cache_refresh_size}")
 
     if (fresh_photo_count <= cache_refresh_size):
         print(f"cacheNeedsUpdate: fresh-photos={fresh_photo_count} cache_size={cache_size}", )
         return True
-    
+
     return False;
 
 
@@ -34,9 +34,9 @@ def delete_old_values():
 
     for cached_photo in photos_to_delete:
         local_cache_file_handler.deleteImageIfInLocalDirectory(cached_photo.cache_file_url)
-    
+
     photos_to_delete.delete();
-    
+
 @background()
 def save_image_url_to_cache_if_unique(image_url):
 
@@ -50,8 +50,8 @@ def save_image_url_to_cache_if_unique(image_url):
     # Doesn't exist so copy it and save.
     new_local_image_url = local_cache_file_handler.copyImageToLocalDirectory(image_url)
     if(new_local_image_url):
-        CachedPhoto.objects.create(cache_file_url=new_local_image_url) 
-    # Even if it 
+        CachedPhoto.objects.create(cache_file_url=new_local_image_url)
+    
     print(f"Saved {image_url} to cache as {new_local_image_url}.");
 
 
@@ -71,10 +71,8 @@ def updateCache():
     add_new_pictures_to_cache(cache_size)
     delete_old_values()
     print('finished updating cache')
-    
 
-# https://django-background-tasks.readthedocs.io/en/latest/
-# maybe can extend this with background task. 
+
 def updateIfNeeded():
     if(cacheNeedsUpdate()):
         updateCache(verbose_name=background_task_verbose_name)
@@ -89,7 +87,7 @@ def urlExists(file_url):
 
 def getNewCacheValue():
     updateIfNeeded()
-    
+
 
     #Should put ones that aren't marked for deletion first (but if they're all marked for delete it still returns something).
     cache_val = CachedPhoto.objects.order_by('number_of_times_read', 'date_added').first()
@@ -98,7 +96,7 @@ def getNewCacheValue():
     # print(cache_val.cache_file_url)
     # print(cache_val.number_of_times_read)
     # print(cache_val.date_added)
-    
+
     # Nothing in the DB
     if(not cache_val):
         error_message = "Sorry, no cached objects in db."
@@ -106,11 +104,11 @@ def getNewCacheValue():
         raise Exception(error_message);
 
     return cache_val
-    
-    
-    
+
+
+
 def getNewPicture():
-    
+
     # toDelete asc -- ideally ones that are fresh.
     # number_of_times_read
     # date_added asc
@@ -129,14 +127,13 @@ def getNewPicture():
             cache_val.delete()
 
             print(error_message)
-            
 
 
     print(f"Responding with: {file_url}")
     cache_val.number_of_times_read +=1
     cache_val.save()
 
-    response = local_picture_loader.httpResponsePicturFromLocalUrl(file_url)    
+    response = local_picture_loader.httpResponsePicturFromLocalUrl(file_url)
     return response
 
 
