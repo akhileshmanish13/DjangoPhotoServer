@@ -34,14 +34,12 @@ body{
     object-fit: contain;
 }
 
-#photoFrame1{
-  z-index: 10;
-}
-#photoFrame2{
-  z-index: 25;
-}
+/* Debug */
+/* #photoFrameForeground{
+  background: beige;
+} */
 
-.hiddenPhotoFrame{
+img .hiddenPhotoFrame, .hiddenPhotoFrame{
   opacity: 0;
 }
 
