@@ -6,11 +6,11 @@ function updateBackgroundPhotoFrame(frameNumber){
 
 }
 
-function hideForegroundPhotoFrame(frameNumber){
-    frameNumber=2
-    className = "hiddenPhotoFrame"
-    var imageFrame = document.getElementById("photoFrame"+frameNumber);
+function hideForegroundPhotoFrame(){
+    
+    var imageFrame = document.getElementById("photoFrame2");
 
+    className = "hiddenPhotoFrame"
     if(imageFrame.classList.contains(className)){
         imageFrame.classList.remove(className)
     }else{
@@ -30,19 +30,17 @@ function backgroundPhotoFrame(){
 }
 
 function loadImageIntoFrame(){
-    console.log("loading ImageIntoFrame ");
+    console.log("loading new ImageIntoFrame");
 
     updateBackgroundPhotoFrame(backgroundPhotoFrame())
 
     // Wait for the background of the other to actually load - other it will load and pop halfway through the fade-transition
     setTimeout(function(){
 
-        hideForegroundPhotoFrame(currentPhotoFrame);
+        hideForegroundPhotoFrame();
         currentPhotoFrame = backgroundPhotoFrame();
 
-        // Call self again!
-        // setTimeout(loadImageIntoFrame(), waitForLoadMs);
-        loadImageIntoFrame()
+        loadImageIntoFrame(); // Call self again!
     }, waitForLoadMs);
 
     refreshCount+=1;
@@ -54,24 +52,9 @@ function loadImageIntoFrame(){
 
 
 var currentPhotoFrame = 1;
-var refreshCount = 0;
+var refreshCount = 0;  //reload the page after this many files so that the browser can cleanup  memory.
 
-var waitForLoadMs = 3000;
+var waitForLoadMs = 10  *1000;
 var reloadPageAfterThisManyImages = 20
 
 loadImageIntoFrame();
-
-function openFullscreen(){
-
-    var elem = document.getElementById("photoframe_container");
-
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.mozRequestFullScreen) { /* Firefox */
-        elem.mozRequestFullScreen();
-      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) { /* IE/Edge */
-        elem.msRequestFullscreen();
-      }
-}
