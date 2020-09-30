@@ -56,6 +56,30 @@ var currentPhotoFrame = 2;
 var refreshCount = 0;  //reload the page after this many files so that the browser can cleanup  memory.
 
 var waitForLoadMs = 10  *1000;
+
+
+
+// https://davidwalsh.name/query-string-javascript
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
 var reloadPageAfterThisManyImages = 20
 
+if( getUrlParameter('light') ){
+
+    reloadPageAfterThisManyImages = getUrlParameter('light')
+    if( isNaN(reloadPageAfterThisManyImages) ){
+	reloadPageAfterThisManyImages = 6
+    }
+    
+}
+    
+console.log("reloadPageAfterThisManyImages: ", reloadPageAfterThisManyImages)
+
+
+// Will recursively call itself.
 loadImageIntoFrame();
