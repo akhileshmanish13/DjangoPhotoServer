@@ -126,3 +126,11 @@ USE_TZ = True
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 STATIC_URL = '/static/'
+
+import multiprocessing
+# Background tasks - django-background-tasks
+
+BACKGROUND_TASK_RUN_ASYNC = True
+
+total_cores = multiprocessing.cpu_count()
+BACKGROUND_TASK_ASYNC_THREADS = total_cores - 1

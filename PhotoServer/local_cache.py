@@ -5,8 +5,8 @@ import os
 from background_task import background
 from background_task.models import Task
 
-cache_size = os.environ.get('cache_size', 20)
-# print(f">>>>>>>>>>>>> {cache_size} <<<<<<<<<<<<<<<<")
+cache_size = int(os.environ.get('cache_size', 20))
+print(f">>>>>>>>>>>>> {cache_size} <<<<<<<<<<<<<<<<")
 background_task_verbose_name="Update Cache"
 
 def cacheAlreadySetToUpdate():
