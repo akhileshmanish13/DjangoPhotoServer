@@ -93,7 +93,7 @@ delete from PhotoServer_cachedphoto where 1;
 ## Raspberry PI
 ----------------
 
-To acess the hard-drive it sometimes requires that you be logged in as root otherwise you will get permission errors while the server is running.
+To acess the hard-drive it sometimes requires that you will be logged in as root otherwise you will get permission errors while the server is running.
 
 Most of the pictures are accessible by root though so you can log into the pi and run:
 - sudo su root
